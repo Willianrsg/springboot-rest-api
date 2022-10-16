@@ -22,7 +22,7 @@ public class Usuario implements Serializable{
 	private String nome;
 	private String login;
 	private int senha;
-	public Long getId() {
+	public Long getId() { 
 		return id;
 	}
 	public void setId(Long id) {
