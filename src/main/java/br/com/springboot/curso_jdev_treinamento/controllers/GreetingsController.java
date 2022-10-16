@@ -17,8 +17,10 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
+import br.com.springboot.curso_jdev_treinamento.repository.ClienteRepository;
 import br.com.springboot.curso_jdev_treinamento.repository.ProdutoRepository;
 import br.com.springboot.curso_jdev_treinamento.repository.UsuarioRepository;
+import br.com.springboot.curso_jdev_treinamento_model.Cliente;
 import br.com.springboot.curso_jdev_treinamento_model.Produto;
 import br.com.springboot.curso_jdev_treinamento_model.Usuario;
 
@@ -33,30 +35,9 @@ public class GreetingsController {
 	private UsuarioRepository usuarioRepository;
 	@Autowired
 	private ProdutoRepository produtoRepository;
-    /**
-     *
-     * @param name the name to greet
-     * @return greeting text
-     */
-	/*
-    @RequestMapping(value = "/mostrarnome/{name}", method = RequestMethod.GET)
-    @ResponseStatus(HttpStatus.OK)
-    public String greetingText(@PathVariable String name) {
-        return "Curso Spring Boot API " + name + "!";
-    }
-    
-    @RequestMapping(value = "/olamundo/{nome}", method = RequestMethod.GET)
-    @ResponseStatus(HttpStatus.OK)
-    public String retornaOlaMundo(@PathVariable String nome) {
-    	
-    	Usuario usuario = new Usuario();
-    	usuario.setNome(nome);
-    	
-    	usuarioRepository.save(usuario);
-    	return "Ola mundo" + nome;
-    }
-    */
-	
+	@Autowired
+	private ClienteRepository clienteRepository;
+   	
 	
 	/*----------------------------------LISTAR TODOS USUARIOS---------------------------------------------------------*/
 	
@@ -216,6 +197,85 @@ public class GreetingsController {
     	return new ResponseEntity<Produto>(prod, HttpStatus.OK);
     }
     
+    
+    /*----------------------------------CLIENTES---------------------------------------------------------*/
+    
+/*----------------------------------LISTAR TODOS CLIENTES---------------------------------------------------------*/
+	
+    
+    @GetMapping(value = "listatodosCliente")/*Nosso primeiro método de API*/
+    @ResponseStatus /*Retorna os dados para o corpo da resposta*/
+    public ResponseEntity<List<Cliente>> listaCliente(){
+    	
+    	List<Cliente> cliente = clienteRepository.findAll();/*Executa a consulta no banco de dados*/
+    	return new ResponseEntity<List<Cliente>>(cliente, HttpStatus.OK);/*Retorna a lista em JSON*/
+    }
+    
+    
+    /*----------------------------------SALVAR CLIENTE---------------------------------------------------------*/
+    
+    
+    @PostMapping(value = "salvarCliente")/*Mapeia a url*/
+    @ResponseBody /*Descrição da resposta*/
+    public ResponseEntity<Cliente> salvar(@RequestBody Cliente cliente){ /*Recebe os dados para Salvar*/
+    	
+    	Cliente cli = clienteRepository.save(cliente);
+    	
+    	return new ResponseEntity<Cliente>(cli, HttpStatus.CREATED);
+    }
+    
+    
+    /*----------------------------------DELETA CLIENTE---------------------------------------------------------*/
+    
+    
+    @DeleteMapping(value = "deleteCliente")/*Mapeia a url*/
+    @ResponseBody /*Descrição da resposta*/
+    public ResponseEntity<String> deleteCliente(@RequestParam Long idcliente){ /*Recebe os dados para Deletar*/
+    	
+    	clienteRepository.deleteById(idcliente);
+    	
+    	return new ResponseEntity<String>("User deletado com sucesso!!!", HttpStatus.OK);
+    }
+    
+    
+    /*----------------------------------BUSCA POR ID DO CLIENTE----------------------------------------------------*/
+    
+    @GetMapping(value = "buscarclienteid")/*Mapeia a url*/
+    @ResponseBody /*Descrição da resposta*/
+    public ResponseEntity<Cliente> buscarclienteid(@RequestParam(name = "idcli") Long idcli){ /*Recebe os dados para Deletar*/
+    	
+    	Cliente cliente = clienteRepository.findById(idcli).get();
+    	
+    	return new ResponseEntity<Cliente>(cliente, HttpStatus.OK);
+    }
+    
+    
+    /*----------------------------------ATUALIZA CLIENTE---------------------------------------------------------*/
+    
+    
+    @PostMapping(value = "atualizarCliente")/*Mapeia a url*/
+    @ResponseBody /*Descrição da resposta*/
+    public ResponseEntity<?> atualizarCliente(@RequestBody Cliente cliente){ /*Recebe os dados para Salvar*/
+    	
+    	if (cliente.getId() == null) {
+    		return new ResponseEntity<String>("Id não foi informado para atualização.", HttpStatus.OK);
+    	}
+    	
+    	Cliente cli = clienteRepository.saveAndFlush(cliente);
+    	
+    	return new ResponseEntity<Cliente>(cli, HttpStatus.OK);
+    }
+    
+    /*----------------------------------BUSCA POR CLIENTE---------------------------------------------------------*/
+    
+    @GetMapping(value = "buscarPorNomeCliente")/*Mapeia a url*/
+    @ResponseBody /*Descrição da resposta*/
+    public ResponseEntity<List<Cliente>> buscarPorNomeCliente(@RequestParam(name = "name") String name){ /*Recebe os dados para Deletar*/
+    	
+    	List<Cliente> cliente = clienteRepository.buscarPorNome(name.trim().toUpperCase());
+    	
+    	return new ResponseEntity<List<Cliente>>(cliente, HttpStatus.OK);
+    }
 }
 
 
