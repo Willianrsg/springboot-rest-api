@@ -1,6 +1,7 @@
 package br.com.springboot.curso_jdev_treinamento_model;
 
 import java.io.Serializable;
+import java.net.PasswordAuthentication;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -19,9 +20,8 @@ public class Usuario implements Serializable{
 	private Long id;
 	
 	private String nome;
-	private int idade;
-	
-	
+	private String login;
+	private int senha;
 	public Long getId() {
 		return id;
 	}
@@ -34,12 +34,22 @@ public class Usuario implements Serializable{
 	public void setNome(String nome) {
 		this.nome = nome;
 	}
-	public int getIdade() {
-		return idade;
+	public String getLogin() {
+		return login;
 	}
-	public void setIdade(int idade) {
-		this.idade = idade;
+	public void setLogin(String login) {
+		this.login = login;
 	}
+	public int getSenha() {
+		return senha;
+	}
+	public void setSenha(int senha) {
+		this.senha = senha;
+	}
+	
+	
+	
+	
 	
 	
 
