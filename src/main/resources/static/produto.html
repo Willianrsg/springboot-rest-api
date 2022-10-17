@@ -15,19 +15,25 @@
 	crossorigin="anonymous">
 
 <style type="text/css">
-.formCadastroProduct {
-	margin-left: 5%;
-	margin-right: 5%;
-	margin-top: 5%;
-}
+	 .cad{
+		margin-left: 15%;
+		margin-right: 15%;
+	}
+	.botao{
+	margin-left: 15%;
+	}
+	.h3{
+		margin-left: 45%;
+		
+	}
 </style>
 </head>
 <body>
 	<div id="header"></div>
 
-	<h3>Produtos</h3>
+	<h3 class="h3">Produto</h3>
 
-	<form action="" id="formCadastroProduct">
+	<form action="" class="cad" id="formCadastroProduct">
 
 		<div class="mb-3">
 			<label for="id" class="form-label">ID</label> <input type="text"
@@ -66,7 +72,7 @@
 
 	</form>
 
-
+	<div class="botao">
 	<button type="button" class="btn btn-primary" onclick="salvarProduto()">Salvar</button>
 	<button type="button" class="btn btn-secondary"
 		onclick="document.getElementById('formCadastroProduct').reset();">Novo</button>
@@ -74,7 +80,7 @@
 		data-bs-target="#modalPesquisarProduto">Pesquisar</button>
 	<button type="button" onclick="botaoDeletarDaTela();"
 		class="btn btn-warning">Deletar</button>
-
+	</div>
 
 
 
@@ -335,4 +341,7 @@
 		</script>
 
 	</div>
-	<div id="footer"></div>
+	<br><br>
+	<footer style="align-items: flex-end;">
+		<div id="footer"></div>
+	</footer>
